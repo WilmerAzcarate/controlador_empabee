@@ -1,32 +1,40 @@
-#include <ArduinoJson.h>
-#include <LinkedList.h>
-#include <WiFiNINA.h>
-#include <HttpClient.h>
+#ifndef CONTROLADOR_SERVICE_H
+#define CONTROLADOR_SERVICE_H
+
+#include <HTTPClient.h>
 #include <models/Controlador.h>
+#include <env/get_env.h>
 
 class ControladorService
 {
 private:
-    String server_name;
-    int port;
-    String request_url;
-    WiFiClient wifiClient;
-    HttpClient http = HttpClient(wifiClient);
+    const char *m_baseURL;
 
 public:
-    ControladorService()
-    {
-        this->server_name = SERVER_NAME;
-        this->port = SERVER_PORT;
-        this->request_url = REQUEST_URL;
-        this->request_url += "/controladores";
-    }
+    ControladorService(const char *baseURL) : m_baseURL(baseURL) {}
 
-    Controlador getControlador(String uuid)
+    void getControlador(char *path)
     {
-        String requestUrl = this->request_url;
-        requestUrl += uuid;
-        int data = this->http.get(this->ñserver_name.c_str(), this->port, requestUrl.c_str());
-        return Controlador::fromJson(data);
+        HTTPClient http;
+        const char *authorizationToken = GetEnv::getControladorId();
+        http.begin(this->m_baseURL + String(path)+"/"+authorizationToken);
+        http.addHeader("X-Sensor-UUID", authorizationToken);
+
+        int httpCode = http.GET();
+        String response = "";
+
+        if (httpCode > 0)
+        {
+            response = http.getString();
+        }
+        else
+        {
+            Serial.printf("[HTTP] GET failed, error: %s\n", http.errorToString(httpCode).c_str());
+        }
+
+        http.end();
+        Serial.println(response);
     }
 };
+
+#endif

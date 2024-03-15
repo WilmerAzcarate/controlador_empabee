@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "author": "Tu Nombre",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "id": "uno_wifi",
+      "type": "wokwi-esp32-devkit-v1",
+      "left": 100,
+      "top": 100,
+      "attrs": {}
+    },
+    {
+      "id": "led1",
+      "type": "wokwi-led",
+      "left": 50,
+      "top": 50,
+      "attrs": {
+        "color": "red"
+      }
+    }
+  ],
+  "connections": [
+    [ "uno_wifi:TX0", "$serialMonitor:RX", "", [] ],
+    [ "uno_wifi:RX0", "$serialMonitor:TX", "", [] ]
+  ]
+}

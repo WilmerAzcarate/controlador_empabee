@@ -1,3 +1,6 @@
+#ifndef COLMENA_H
+#define COLMENA_H
+
 #include <ArduinoJson.h>
 
 class Colmena
@@ -113,3 +116,5 @@ public:
         return Colmena(nombre, temperatura_minima, temperatura_maxima, peso_minimo, peso_maximo, humedad_minima, humedad_maxima);
     }
 };
+
+#endif

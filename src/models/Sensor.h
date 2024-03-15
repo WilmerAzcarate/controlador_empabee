@@ -1,3 +1,6 @@
+#ifndef SENSOR_H
+#define SENSOR_H
+
 #include <ArduinoJson.h>
 #include <LinkedList.h>
 
@@ -88,3 +91,5 @@ public:
         return jsonStr;
     }
 };
+
+#endif

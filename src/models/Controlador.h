@@ -1,3 +1,6 @@
+#ifndef CONTROLADOR_H
+#define CONTROLADOR_H
+
 #include <ArduinoJson.h>
 #include <LinkedList.h>
 #include <models/Sensor.h>
@@ -54,3 +57,5 @@ public:
         return Controlador(uuid, sensores, colmena);
     }
 };
+
+#endif
